@@ -5,15 +5,18 @@ pipeline {
             steps {
                 script {
                     // Build the Docker image
-                    docker.build('tanishkagoyal/my-html-site') // Replace with your Docker Hub username/repository
+                    docker.build('my-image')
                 }
             }
         }
-        stage('Push') {
+        stage('Test') {
             steps {
                 script {
-                    // Push the Docker image to Docker Hub
-                    sh 'docker push tanishkagoyal/my-html-site' // Replace with your Docker Hub username/repository
+                    // Run tests inside the Docker container
+                    docker.image('my-image').inside {
+                        // Your test command here, e.g., running npm tests
+                        sh 'npm test'
+                    }
                 }
             }
         }
