@@ -1,9 +1,20 @@
 pipeline {
     agent any
     stages {
-        stage('Build & Push') {
+        stage('Build') {
             steps {
-                bat 'docker build -t tanishkagoyal/my-html-site . && docker push tanishkagoyal/my-html-site'
+                script {
+                    // Build the Docker image
+                    docker.build('tanishkagoyal/my-html-site') // Replace with your Docker Hub username/repository
+                }
+            }
+        }
+        stage('Push') {
+            steps {
+                script {
+                    // Push the Docker image to Docker Hub
+                    sh 'docker push tanishkagoyal/my-html-site' // Replace with your Docker Hub username/repository
+                }
             }
         }
     }
